@@ -2,7 +2,7 @@ import * as PIXI from "pixi.js";
 import Victor from "victor";
 
 
-let canvasSize = 256;
+const canvasSize = 256;
 const canvas = document.getElementById("mycanvas");
 const app = new PIXI.Application({
     view: canvas,
@@ -11,7 +11,7 @@ const app = new PIXI.Application({
     backgroundColor: 0x5c812f,
 });
 
-let squareWidth = 32;
+const squareWidth = 32;
 const square = new PIXI.Sprite(PIXI.Texture.WHITE);
 square.anchor.set(0.5);
 square.position.set(app.screen.width / 2, app.screen.height / 2);
@@ -20,7 +20,8 @@ square.tint = 0xea985d;
 
 app.stage.addChild(square);
 
-let enemyRadius = 16;
+const enemyRadius = 16;
+const enemySpeed = 2;
 const enemy = new PIXI.Graphics();
 let r = randomSpawnPoint();
 enemy.position.set(r.x, r.y);
@@ -33,7 +34,13 @@ app.ticker.add((delta) => {
     const cursorPosition = app.renderer.plugins.interaction.mouse.global;
     let angle = Math.atan2(cursorPosition.y - square.position.y, cursorPosition.x - square.position.x) + Math.PI / 2;
     square.rotation = angle;
-})
+
+    let e = new Victor(enemy.position.x, enemy.position.y);
+    let s = new Victor(square.position.x, square.position.y);
+    let d = s.subtract(e);
+    let v = d.normalize().multiplyScalar(enemySpeed);
+    enemy.position.set(enemy.position.x + v.x, enemy.position.y + v.y);
+});
 
 function randomSpawnPoint() {
     let edge = Math.floor(Math.random() * 4);
