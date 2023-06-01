@@ -46,7 +46,9 @@ function randomSpawnPoint() {
             spawnPoint.x = canvasSize;
             spawnPoint.y = canvasSize * Math.random();
             break;
-        default:
+        case 2: //bottom
+            spawnPoint.x = canvasSize * Math.random();;
+            spawnPoint.y = canvasSize;
             break;
     }
     return spawnPoint;
