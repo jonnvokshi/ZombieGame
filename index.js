@@ -39,7 +39,12 @@ function randomSpawnPoint() {
     let edge = Math.floor(Math.random() * 4);
     let spawnPoint = new Victor(0, 0)
     switch (edge) {
-        case 0: spawnPoint.x = canvasSize * Math.random();
+        case 0: //top
+            spawnPoint.x = canvasSize * Math.random();
+            break;
+        case 1: //right
+            spawnPoint.x = canvasSize;
+            spawnPoint.y = canvasSize * Math.random();
             break;
         default:
             break;
