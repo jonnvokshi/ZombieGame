@@ -1,7 +1,7 @@
 {
   "name": "snowpack-pixijs",
   "version": "1.0.0",
-  "description": "Snowpack & Pixi.js template",
+  "description": "Apocalypse Dash: Undead Uprising",
   "main": "index.js",
   "scripts": {
     "start": "snowpack dev --polyfill-node",
