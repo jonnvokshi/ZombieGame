@@ -50,6 +50,10 @@ function randomSpawnPoint() {
             spawnPoint.x = canvasSize * Math.random();;
             spawnPoint.y = canvasSize;
             break;
+        default: //left
+            spawnPoint.x = 0;
+            spawnPoint.y = canvasSize * Math.random();
+            break;
     }
     return spawnPoint;
 }
