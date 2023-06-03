@@ -19,6 +19,7 @@ let zSpawner = new Spawner({ create: () => new Zombie({ app, player }) });
 app.ticker.add((delta) => {
     player.update();
     zSpawner.spawns.forEach(zombie => zombie.update());
+    bulletHitTest({ bullets: player.shooting.bullets, zombies: zSpawner.spawns, bulletRadius: 8, zombieRadius: 16 })
 });
 
 function bulletHitTest({ bullets, zombies, bulletRadius, zombieRadius }) {
