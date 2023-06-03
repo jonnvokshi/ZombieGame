@@ -20,3 +20,17 @@ app.ticker.add((delta) => {
     player.update();
     zSpawner.spawns.forEach(zombie => zombie.update());
 });
+
+function bulletHitTest({ bullets, zombies, bulletRadius, zombieRadius }) {
+    bullets.forEach(bullet => {
+        zombies.forEach((zombie, index) => {
+            let dx = zombie.position.x - bullet.position.x;
+            let dy = zombie.position.y - bullet.position.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < bulletRadius + zombieRadius) {
+                zombies.splice(index, 1);
+                zombie.kill();
+            }
+        })
+    })
+}
