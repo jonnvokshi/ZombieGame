@@ -57,7 +57,7 @@ export default class Zombie {
         this.zombie.loop = false;
         this.zombie.onComplete = () => setTimeout(() => this.app.stage.removeChild(this.zombie), 30000)
         this.zombie.play();
-
+        this.zombie.zIndex = -1;
         clearInterval(this.interval);
     }
 
