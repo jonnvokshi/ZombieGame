@@ -76,6 +76,7 @@ function createScene(sceneText) {
 
 function startGame() {
     app.gameStarted = true;
+    app.weather.enableSound();
 }
 
 async function loadAssets() {
