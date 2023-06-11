@@ -30,6 +30,9 @@ export default class Zombie {
         if (this.attacking) return;
         this.attacking = true;
         this.interval = setInterval(() => this.player.attack(), 500);
+        this.zombie.textures = this.attack.textures;
+        this.zombie.animationSpeed = 0.1
+        this.zombie.play();
     }
 
     update(delta) {
@@ -46,7 +49,13 @@ export default class Zombie {
     }
 
     kill() {
-        this.app.stage.removeChild(this.zombie);
+        // this.app.stage.removeChild(this.zombie);
+
+        this.zombie.textures = this.die.textures;
+        this.zombie.loop = false;
+        this.zombie.onComplete = () => setTimeout(() => this.app.stage.removeChild(this.zombie), 30000)
+        this.zombie.play();
+
         clearInterval(this.interval);
     }
 
