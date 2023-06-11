@@ -13,21 +13,33 @@ const app = new PIXI.Application({
     backgroundColor: 0x5c812f,
 });
 
-let player = new Player({ app });
-let zSpawner = new Spawner({ app, create: () => new Zombie({ app, player }) });
+initGame();
 
-let gameStartScene = createScene("Click Anywhere to Start")
-app.gameStarted = false;
-let gameOverScene = createScene(`Game Over! Better Luck Next Time 🍀`)
+async function initGame() {
+    try {
+        await loadAssets();
 
-app.ticker.add((delta) => {
-    gameOverScene.visible = player.dead;
-    gameStartScene.visible = !app.gameStarted;
-    if (app.gameStarted === false) return;
-    player.update(delta);
-    zSpawner.spawns.forEach(zombie => zombie.update(delta));
-    bulletHitTest({ bullets: player.shooting.bullets, zombies: zSpawner.spawns, bulletRadius: 8, zombieRadius: 16 })
-});
+        let player = new Player({ app });
+        let zSpawner = new Spawner({ app, create: () => new Zombie({ app, player }) });
+
+        let gameStartScene = createScene("Click Anywhere to Start")
+        app.gameStarted = false;
+        let gameOverScene = createScene(`Game Over! Better Luck Next Time 🍀`)
+
+        app.ticker.add((delta) => {
+            gameOverScene.visible = player.dead;
+            gameStartScene.visible = !app.gameStarted;
+            if (app.gameStarted === false) return;
+            player.update(delta);
+            zSpawner.spawns.forEach(zombie => zombie.update(delta));
+            bulletHitTest({ bullets: player.shooting.bullets, zombies: zSpawner.spawns, bulletRadius: 8, zombieRadius: 16 });
+        });
+
+    } catch (error) {
+        console.log(error.message);
+        console.log("Load failed");
+    }
+}
 
 function bulletHitTest({ bullets, zombies, bulletRadius, zombieRadius }) {
     bullets.forEach(bullet => {
@@ -57,6 +69,15 @@ function createScene(sceneText) {
 
 function startGame() {
     app.gameStarted = true;
+}
+
+async function loadAssets() {
+    return new Promise((resolve, reject) => {
+        PIXI.Loader.shared.add("/assets/hero_male.json");
+        PIXI.Loader.shared.onComplete.add(resolve);
+        PIXI.Loader.shared.onError.add(reject);
+        PIXI.Loader.shared.load();
+    })
 }
 
 document.addEventListener("click", startGame);
