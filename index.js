@@ -2,6 +2,7 @@ import * as PIXI from "pixi.js";
 import Player from "./player.js";
 import Zombie from "./zombie.js";
 import Spawner from "./spawner.js";
+import { zombies } from "./globals.js";
 
 
 const canvasSize = 512;
@@ -17,7 +18,9 @@ initGame();
 
 async function initGame() {
     try {
+        console.log("loading...");
         await loadAssets();
+        console.log("loaded");
 
         let player = new Player({ app });
         let zSpawner = new Spawner({ app, create: () => new Zombie({ app, player }) });
@@ -73,7 +76,9 @@ function startGame() {
 
 async function loadAssets() {
     return new Promise((resolve, reject) => {
+        zombies.forEach(z => PIXI.Loader.shared.add(`assets/${z}.json`));
         PIXI.Loader.shared.add("/assets/hero_male.json");
+        PIXI.Loader.shared.add("bullet", "assets/bullet.png")
         PIXI.Loader.shared.onComplete.add(resolve);
         PIXI.Loader.shared.onError.add(reject);
         PIXI.Loader.shared.load();
