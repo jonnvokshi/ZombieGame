@@ -18,8 +18,11 @@ let zSpawner = new Spawner({ app, create: () => new Zombie({ app, player }) });
 
 let gameStartScene = createScene("Click Anywhere to Start")
 app.gameStarted = false;
+let gameOverScene = createScene(`Game Over! Better Luck Next Time 🍀`)
 
 app.ticker.add((delta) => {
+    gameOverScene.visible = player.dead;
+    gameStartScene.visible = !app.gameStarted;
     if (app.gameStarted === false) return;
     player.update();
     zSpawner.spawns.forEach(zombie => zombie.update());
