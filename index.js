@@ -2,7 +2,7 @@ import * as PIXI from "pixi.js";
 import Player from "./player.js";
 import Zombie from "./zombie.js";
 import Spawner from "./spawner.js";
-import { textStyle, zombies } from "./globals.js";
+import { textStyle, subTextStyle, zombies } from "./globals.js";
 import Weather from "./weather.js";
 
 
@@ -29,7 +29,7 @@ async function initGame() {
         let player = new Player({ app });
         let zSpawner = new Spawner({ app, create: () => new Zombie({ app, player }) });
 
-        let gameStartScene = createScene("Click to Start")
+        let gameStartScene = createScene("Apocalypse Dash: Undead Uprising", "Click Anywhere To Start!")
         app.gameStarted = false;
         let gameOverScene = createScene(`Game Over! Better Luck Next Time 🍀`)
 
@@ -62,14 +62,22 @@ function bulletHitTest({ bullets, zombies, bulletRadius, zombieRadius }) {
     })
 }
 
-function createScene(sceneText) {
+function createScene(sceneText, sceneSubText) {
     const sceneContainer = new PIXI.Container();
     const text = new PIXI.Text(sceneText, new PIXI.TextStyle(textStyle));
     text.x = app.screen.width / 2;
     text.y = 0;
     text.anchor.set(0.5, 0);
+
+    const subText = new PIXI.Text(sceneSubText, new PIXI.TextStyle(subTextStyle));
+    subText.x = app.screen.width / 2;
+    subText.y = 50;
+    subText.anchor.set(0.5, 0);
+
+
     sceneContainer.zIndex = 1;
     sceneContainer.addChild(text);
+    sceneContainer.addChild(subText);
     app.stage.addChild(sceneContainer);
     return sceneContainer;
 }

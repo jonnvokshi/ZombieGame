@@ -5,7 +5,7 @@ export const textStyle = {
     fontSize: 36,
     fontStyle: "Anormal",
     fontWeight: "bold",
-    fill: ["#88A050", "ff0000"],
+    fill: ["#88A050", "#ff0000"],
     stroke: "#F0E8C8",
     strokeThickness: 2,
     dropShadow: true,
