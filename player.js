@@ -15,7 +15,7 @@ export default class Player {
         this.app = app;
         const playerWidth = 32;
         //this.player = new PIXI.Sprite(PIXI.Texture.WHITE);
-        this.player.anchor.set(0.5);
+        this.player.anchor.set(0.5, 0.3);
         this.player.position.set(app.screen.width / 2, app.screen.height / 2);
         // this.player.width = this.player.height = playerWidth;
         // this.player.tint = 0xea985d;
