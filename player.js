@@ -16,7 +16,8 @@ export default class Player {
         this.lastMouseButton = 0;
         this.shooting = new Shooting({ app, player: this });
         //HEALTHBAR
-
+        this.maxHealth = 100;
+        this.health = this.maxHealth;
         const margin = 16;
         const barHeight = 8;
         this.healthBar = new PIXI.Graphics()
@@ -29,7 +30,13 @@ export default class Player {
         this.app.stage.addChild(this.healthBar)
     }
 
-
+    attack() {
+        this.health -= 1;
+        this.healthBar.width = (this.health / this.maxHealth) * this.healthBar.initialWitdh;
+        if (this.health <= 0) {
+            this.dead = true;
+        }
+    }
 
     get position() {
         return this.player.position;
@@ -40,6 +47,7 @@ export default class Player {
     }
 
     update() {
+
         const mouse = this.app.renderer.plugins.interaction.mouse;
         const cursorPosition = mouse.global;
         let angle = Math.atan2(cursorPosition.y - this.player.position.y, cursorPosition.x - this.player.position.x) + Math.PI / 2;
