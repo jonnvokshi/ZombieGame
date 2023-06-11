@@ -2,7 +2,7 @@ import * as PIXI from "pixi.js";
 import Player from "./player.js";
 import Zombie from "./zombie.js";
 import Spawner from "./spawner.js";
-import { zombies } from "./globals.js";
+import { textStyle, zombies } from "./globals.js";
 import Weather from "./weather.js";
 
 
@@ -64,7 +64,7 @@ function bulletHitTest({ bullets, zombies, bulletRadius, zombieRadius }) {
 
 function createScene(sceneText) {
     const sceneContainer = new PIXI.Container();
-    const text = new PIXI.Text(sceneText);
+    const text = new PIXI.Text(sceneText, new PIXI.TextStyle(textStyle));
     text.x = app.screen.width / 2;
     text.y = 0;
     text.anchor.set(0.5, 0);
