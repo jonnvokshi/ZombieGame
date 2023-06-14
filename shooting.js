@@ -33,7 +33,6 @@ export default class Shooting {
         bullet.velocity = new Victor(Math.cos(angle), Math.sin(angle)).multiplyScalar(this.bulletSpeed);
         this.bullets.push(bullet);
         this.app.stage.addChild(bullet);
-        console.log(this.bullets.length, this.app.stage.children.length);
     }
 
     set shoot(shooting) {

@@ -4,12 +4,14 @@ import Victor
 import { zombies } from "./globals.js";
 
 export default class Zombie {
+    static kills = 0;
+    static zombieSpeed = 2;
     constructor({ app, player }) {
         this.app = app;
         this.player = player;
 
         const radius = 16;
-        this.speed = 1;
+        this.speed = 2;
         let r = this.randomSpawnPoint();
 
         let zombieName = zombies[Math.floor(Math.random() * zombies.length)];
@@ -30,7 +32,7 @@ export default class Zombie {
     attackPlayer() {
         if (this.attacking) return;
         this.attacking = true;
-        this.interval = setInterval(() => this.player.attack(), 500);
+        this.interval = setInterval(() => this.player.attack(), 50);
         this.zombie.textures = this.attack.textures;
         this.zombie.animationSpeed = 0.1
         this.zombie.play();
@@ -44,13 +46,17 @@ export default class Zombie {
             return;
         }
         let d = s.subtract(e);
-        let v = d.normalize().multiplyScalar(this.speed * delta);
+        let v = d.normalize().multiplyScalar((this.speed * Zombie.zombieSpeed ) * delta); // Increase the speed by 2x
         this.zombie.scale.x = v.x < 0 ? 1 : -1;
         this.zombie.position.set(this.zombie.position.x + v.x, this.zombie.position.y + v.y);
     }
 
     kill() {
         // this.app.stage.removeChild(this.zombie);
+        Zombie.kills++; 
+        if(Zombie.kills % 10 ==0){
+            Zombie.zombieSpeed++;
+        }
         this.audio.currentTime = 0;
         this.audio.play();
         this.zombie.textures = this.die.textures;
